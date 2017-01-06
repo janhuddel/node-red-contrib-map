@@ -1,0 +1,81 @@
+<script type="text/javascript">
+    RED.nodes.registerType('mapping-table',{
+        category: 'config',
+        defaults: {
+            name: {
+            	value: 'default-mapping-table',
+            	required: true
+            },
+            map: {
+            	value: [ {search: '', replace: ''} ]
+            }
+        },
+        label: function() {
+            return this.name;
+        },
+        oneditprepare: function() {
+            $('#node-config-input-mapping-container').css('min-height','500px').css('min-width','450px').editableList({
+              addItem: function(container, i, opt) {
+              	var mapping = opt;
+            		
+            		var row = $('<div/>').appendTo(container);
+                
+                // search-textfield
+                var searchField = $('<input/>', {
+                	class: "node-input-mapping-search",
+                	type: "text",
+                	style: "margin-left: 5px; width: 45%;",
+                	placeholder: "Search"
+                }).appendTo(row);
+                
+                // right arrow
+                $('<span/>', {
+                	class: "fa fa-arrow-right",
+                	style: "margin: 5px"
+                }).appendTo(row);
+                
+                // replace-textfield
+                var replaceField = $('<input/>', {
+                	class: "node-input-mapping-replace",
+                	type: "text",
+                	style: "width: 45%;",
+                	placeholder:"Replace"
+                }).appendTo(row);
+                
+                // set text
+                searchField.val(mapping.search);
+                replaceField.val(mapping.replace);
+              },
+              removable: true,
+              sortable: true
+            });
+            
+            for (var i = 0; i < this.map.length; i++) {
+                var mapping = this.map[i];
+                $("#node-config-input-mapping-container").editableList('addItem', mapping);
+            }
+        },
+        oneditsave: function() {
+						var mappings = $("#node-config-input-mapping-container").editableList('items');
+           	var node = this;
+           	node.map = [];
+						mappings.each(function(i) {
+					  	var mapping = $(this);
+					    node.map.push({
+					        search: mapping.find(".node-input-mapping-search").val(),
+					        replace: mapping.find(".node-input-mapping-replace").val(),
+					    });
+						});
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="mapping-table">
+    <div class="form-row">
+        <label for="node-config-input-name"><i class="icon-bookmark"></i> Name</label>
+        <input type="text" id="node-config-input-name">
+    </div>
+    <div class="form-row node-config-input-mapping-container-row">
+    	<ol id="node-config-input-mapping-container"></ol>
+		</div>
+</script>

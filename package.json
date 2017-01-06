@@ -1,0 +1,20 @@
+{
+    "name"          : "node-red-contrib-map",
+    "version"       : "0.1.0",
+    "description"   : "Map msg-properties with mapping-table",
+    "dependencies"  : {
+    },
+    "repository" : {
+    },
+    "license": "MIT",
+    "keywords": [ "node-red", "map" ],
+    "node-red": {
+        "nodes": {
+            "map": "map.js"
+        }
+    },
+    "author": {
+        "name": "Jan Rohwer",
+        "email": "jan.rohwer@gmail.com"
+    }
+}

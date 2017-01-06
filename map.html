@@ -1,0 +1,53 @@
+<script type="text/javascript">
+    RED.nodes.registerType('map',{
+        category: 'function',
+        color: '#EFEFEF',
+        defaults: {
+            name: {
+            	value: ''
+            },
+            property: {
+            	value: 'payload',
+            	required: true
+            },
+            propertyType: {
+            	value: 'msg'
+            },
+            mappingTable: {
+            	value: '',
+            	type: 'mapping-table',
+            	required: true
+            }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: 'arrow-in.png',
+        label: function() {
+        	return this.name || 'map';
+        },
+        oneditprepare: function() {
+        	$("#node-input-property").typedInput({
+    				default: "msg",
+    				types: ["msg"]
+					});
+				},
+				oneditsave: function() {
+					this.propertyType = $("#node-input-property").typedInput('type');
+				}
+    });
+</script>
+
+<script type="text/x-red" data-template-name="map">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-property"><i class="icon-book"></i> Property</label>
+        <input type="text" id="node-input-property" placeholder="payload">
+    </div>
+    <div class="form-row">
+        <label for="node-input-mappingTable"><i class="icon-list"></i> Table</label>
+        <input type="text" id="node-input-mappingTable" placeholder="">
+    </div>
+</script>
